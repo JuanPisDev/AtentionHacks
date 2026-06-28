@@ -1,8 +1,9 @@
-function ServiceButton({serviceName}) {
+import {Link} from 'react-router-dom'
+function ServiceButton({serviceName, serviceLink}) {
 
   return (
     <>
-        <a href="">{serviceName}</a>      
+        <a href={serviceLink}>{serviceName}</a>      
     </>
   )
 }
