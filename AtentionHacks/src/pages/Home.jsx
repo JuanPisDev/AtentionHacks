@@ -1,15 +1,20 @@
 import ServiceButton from "../components/HomeComponents/ServiceButton"
+import styles from "../components/HomeComponents/HomeStyles/HomeStyles.module.css"
+
 function Home() {
 
   return (
-    <>
-      <h1>Atention Hacks</h1>
-      <ServiceButton serviceLink="" serviceName="Pomodoro" />
-      <ServiceButton serviceLink="/alarms" serviceName="Alarms"/>
-      <ServiceButton serviceLink="" serviceName="Meditation"/>
-      <ServiceButton serviceLink="" serviceName="KanBan"/>
-
-    </>
+    <div className={styles.home}>
+      <div className={styles.menu}>
+        <h1 className={styles.title}>Atention Hacks</h1>
+        <div className={styles.serviceSection}>
+        <ServiceButton className={styles.serviceButton} serviceLink="" serviceName="Pomodoro" />
+        <ServiceButton className={styles.serviceButton} serviceLink="/alarms" serviceName="Alarms"/>
+        <ServiceButton className={styles.serviceButton} serviceLink="" serviceName="Meditation"/>
+        <ServiceButton className={styles.serviceButton} serviceLink="" serviceName="KanBan"/>
+        </div>
+      </div>
+    </div>
   )
 }
 

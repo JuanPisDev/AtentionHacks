@@ -1,0 +1,28 @@
+.ServiceButton {
+    width: 70vw;
+    height: 10vh;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: whitesmoke;
+    font-size: 2rem;
+    font-weight: bold;
+    background-color: rgb(247, 233, 30);
+    border-radius: 1rem;
+    margin: 2% 0;
+    text-shadow: 2px 4px 10px rgb(0, 0, 0);
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.507);
+
+}
+
+.ServiceButton:hover {
+    box-shadow: 2px 4px 10px rgb(0, 0, 0);
+
+}
+
+.ServiceButton:active {
+    text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.212);
+    box-shadow: inset 2px 4px 8px rgba(0, 0, 0, 0.507);
+
+}
