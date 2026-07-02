@@ -8,14 +8,23 @@ import { useState } from "react"
 function Alarms() {
 
   const [isCreatingAlarm, setIsCreatingAlarm] = useState(false);
+  const [alarms, setAlarms] = useState([]);
+
 
   return (
     <>
       <h1>Alarms</h1>
       <NewAlarmButton onClick={() => setIsCreatingAlarm(true)}/>
-      {isCreatingAlarm && <AlarmModal onClose={() => setIsCreatingAlarm(false)}/>}
-      <Alarm hour="6" minute="30" am_pm="am"/>
-      <Alarm hour="5" minute="25" am_pm="pm"/>
+      {isCreatingAlarm && <AlarmModal onSave={
+          (alarm)=> setAlarms([...alarms,alarm])
+        }
+      onClose={() => setIsCreatingAlarm(false)}/>}
+      <div className="alarmsSection">
+        {alarms.map((alarm) => (
+          <Alarm name={alarm.alarmName} time={alarm.alarmTime} repeat={alarm.repeatMode}/>
+
+        ))}
+      </div>
       <HomeButton/>
     </>
   )
