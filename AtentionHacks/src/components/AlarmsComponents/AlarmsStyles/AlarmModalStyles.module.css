@@ -1,0 +1,48 @@
+.alarmModal{
+    background-color: orange;
+    width: 300px;
+    border-radius: 1rem;
+    margin: 10% 0;
+    height: 370px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.507);
+}
+.alarmTitle{
+    color: whitesmoke;
+    font-size: 1.5rem;
+    font-weight: bold;
+    justify-content: center;
+    text-shadow: 2px 4px 10px rgb(0, 0, 0);
+    margin: 2% 0;
+}
+
+.alarmInput{
+    width: 200px;
+    height: 35px;
+    border: 0;
+    margin: 2% 0;
+    border-radius: 0.5rem;
+    font-size: 1.5rem;
+}
+
+.alarmButton{
+    width: 200px;
+    height: 40px;
+    margin: 2% 0;
+    border-radius: 2rem;
+    border: 0;
+    font-size: 1.5rem;
+}
+
+.alarmButton:hover {
+    box-shadow: 2px 4px 10px rgb(0, 0, 0);
+    cursor: pointer;
+}
+
+.alarmButton:active {
+    text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.212);
+    box-shadow: inset 2px 4px 8px rgba(0, 0, 0, 0.507);
+
+}

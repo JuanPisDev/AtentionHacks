@@ -1,8 +1,9 @@
+import styles from "../AlarmsComponents/AlarmsStyles/HomeButton.module.css"
 import {Link} from 'react-router-dom'
 function HomeButton() {
 return (
     <>
-        <Link to="/">Go HomePage</Link>      
+        <Link className={styles.homebutton} to="/">HOME</Link>      
     </>
   )
 }

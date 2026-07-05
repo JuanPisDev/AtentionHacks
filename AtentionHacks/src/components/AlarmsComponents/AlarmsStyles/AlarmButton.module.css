@@ -1,0 +1,29 @@
+.alarmButton{
+    width: 200px;
+    height: 10vh;
+    border: 0;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: whitesmoke;
+    font-size: 3rem;
+    font-weight: bold;
+    background-color: rgb(247, 233, 30);
+    border-radius: 1rem;
+    margin: 2% 0;
+    text-shadow: 2px 4px 10px rgb(0, 0, 0);
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.507);
+
+
+}
+.alarmButton:hover {
+    box-shadow: 2px 4px 10px rgb(0, 0, 0);
+    cursor: pointer;
+}
+
+.alarmButton:active {
+    text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.212);
+    box-shadow: inset 2px 4px 8px rgba(0, 0, 0, 0.507);
+
+}

@@ -1,8 +1,11 @@
+import styles from "../AlarmsStyles/AlarmButton.module.css"
+
+
 function NewAlarmButton({onClick}) {
 
   return (
     <>
-      <button onClick={onClick}>
+      <button  className={styles.alarmButton} onClick={onClick}>
           +
       </button>
     </>

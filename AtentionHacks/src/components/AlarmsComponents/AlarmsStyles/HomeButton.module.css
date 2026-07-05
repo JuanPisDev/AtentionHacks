@@ -1,0 +1,29 @@
+.homebutton{
+    width: 200px;
+    height: 10vh;
+    border: 0;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: whitesmoke;
+    font-size: 1.5rem;
+    font-weight: bold;
+    background-color: rgb(73, 73, 73);
+    border-radius: 1rem;
+    margin: 2% 0;
+    text-shadow: 2px 4px 10px rgb(0, 0, 0);
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.507);
+
+
+}
+.homebutton:hover {
+    box-shadow: 2px 4px 10px rgb(0, 0, 0);
+    cursor: pointer;
+}
+
+.homebutton:active {
+    text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.212);
+    box-shadow: inset 2px 4px 8px rgba(0, 0, 0, 0.507);
+
+}
