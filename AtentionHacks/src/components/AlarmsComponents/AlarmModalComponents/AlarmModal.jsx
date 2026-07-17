@@ -1,22 +1,33 @@
+import { useEffect } from "react";
 import styles from "../AlarmsStyles/AlarmModalStyles.module.css"
 import { useState } from "react"
 
-function AlarmModal({onClose, onSave, alarm}) {
+function AlarmModal({onClose, onSave, editingAlarm}) {
 
     const [alarmName, setAlarmName] = useState('');
     const [alarmTime, setAlarmTime] = useState('');
     const [repeatMode, setRepeatMode] = useState('');
-
+    useEffect(() => {
+        if(editingAlarm == null){
+            setAlarmName(" ")
+            setAlarmTime(" ")
+            setRepeatMode(" ")
+        } else {
+            setAlarmName(editingAlarm.alarmName)
+            setAlarmTime(editingAlarm.alarmTime)
+            setRepeatMode(editingAlarm.repeatMode)   
+        }
+    },[editingAlarm])
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if(!alarmName || !alarmTime || !repeatMode) return;
         const alarm={
-            alarmName, 
-            alarmTime, 
-            repeatMode
-        };
-        console.log(alarm);
+                id: crypto.randomUUID(),
+                alarmName, 
+                alarmTime, 
+                repeatMode
+                };
         onSave(alarm);
         onClose();
     }
@@ -27,11 +38,11 @@ function AlarmModal({onClose, onSave, alarm}) {
     <>
         <form id="myFormulary" className={styles.alarmModal} onSubmit={handleSubmit}>
             <label className={styles.alarmTitle} htmlFor="">Alarm Name</label>
-            <input className={styles.alarmInput} type="text" value={alarmName} onChange={ev => setAlarmName(ev.target.value)} required/>
+            <input className={styles.alarmInput} type="text"  value={alarmName} onChange={ev => setAlarmName(ev.target.value)} required/>
             <label className={styles.alarmTitle} htmlFor="">Set Time</label>
-            <input className={styles.alarmInput} type="time" value={alarmTime} onChange={ev => setAlarmTime(ev.target.value)} required/>
+            <input className={styles.alarmInput} type="time"  value={alarmTime} onChange={ev => setAlarmTime(ev.target.value)} required/>
             <label className={styles.alarmTitle} htmlFor="">Repeat</label>    
-            <select className={styles.alarmInput} name="repeat" id="" value={repeatMode} onChange={ev => setRepeatMode(ev.target.value)} required>
+            <select className={styles.alarmInput} name="repeat"  value={repeatMode} onChange={ev => setRepeatMode(ev.target.value)} required>
                 <option value=""></option>
                 <option value="YES">YES</option>
                 <option value="NO">NO</option>
