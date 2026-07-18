@@ -32,7 +32,19 @@ function Alarms() {
       <div className={styles.alarmsSection}>
       <NewAlarmButton onClick={() => {setIsCreatingAlarm(true); setEditingAlarm(null);}}/>
       {isCreatingAlarm && <AlarmModal onSave={
-          (alarm)=> {setAlarms([...alarms,alarm]); setEditingAlarm(null);}
+        (newAlarm)=> {
+          if(editingAlarm == null){          
+          setAlarms(prevAlarms => [...prevAlarms,newAlarm]); setEditingAlarm(null);
+          } else {
+            setAlarms(prevAlarms => 
+              prevAlarms.map(alarm =>
+            newAlarm.id === alarm.id 
+            ? newAlarm
+            : alarm
+          )); 
+          setEditingAlarm(null);
+        }}
+        
         }
         editingAlarm={editingAlarm} 
         onClose={() => {setIsCreatingAlarm(false); setEditingAlarm(null);} }/>

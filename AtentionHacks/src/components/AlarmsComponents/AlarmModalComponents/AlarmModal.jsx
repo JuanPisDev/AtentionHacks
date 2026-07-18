@@ -9,9 +9,9 @@ function AlarmModal({onClose, onSave, editingAlarm}) {
     const [repeatMode, setRepeatMode] = useState('');
     useEffect(() => {
         if(editingAlarm == null){
-            setAlarmName(" ")
-            setAlarmTime(" ")
-            setRepeatMode(" ")
+            setAlarmName("")
+            setAlarmTime("")
+            setRepeatMode("")
         } else {
             setAlarmName(editingAlarm.alarmName)
             setAlarmTime(editingAlarm.alarmTime)
@@ -22,12 +22,23 @@ function AlarmModal({onClose, onSave, editingAlarm}) {
     const handleSubmit = (e) => {
         e.preventDefault();
         if(!alarmName || !alarmTime || !repeatMode) return;
-        const alarm={
+        let alarm;
+        if(editingAlarm == null){
+            alarm={
                 id: crypto.randomUUID(),
                 alarmName, 
                 alarmTime, 
                 repeatMode
-                };
+            }
+        } else {
+            alarm={
+                id: editingAlarm.id,
+                alarmName, 
+                alarmTime, 
+                repeatMode
+            }
+        }
+
         onSave(alarm);
         onClose();
     }
