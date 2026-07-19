@@ -10,13 +10,18 @@ function Alarms() {
   const [isCreatingAlarm, setIsCreatingAlarm] = useState(false);
   const [editingAlarm, setEditingAlarm] = useState(null);
   const [alarms, setAlarms] = useState([]);
+  const alarmsSection = document.querySelector('.alarms');
+
 
   useEffect(() => {
   if (isCreatingAlarm) {
       document.body.style.overflow = 'hidden';
+      document.body.style.pointerEvents = 'none';
   } else {
      document.body.style.overflow = '';
+      document.body.style.pointerEvents = 'auto';
   }
+  
 
     return () => {
       document.body.style.overflow= '';
@@ -31,7 +36,12 @@ function Alarms() {
       <h1 className={styles.title}>Alarms</h1>
       <div className={styles.alarmsSection}>
       <NewAlarmButton onClick={() => {setIsCreatingAlarm(true); setEditingAlarm(null);}}/>
-      {isCreatingAlarm && <AlarmModal onSave={
+      {isCreatingAlarm && <AlarmModal 
+      
+      editingAlarm={editingAlarm} 
+
+      onSave={
+        
         (newAlarm)=> {
           if(editingAlarm == null){          
           setAlarms(prevAlarms => [...prevAlarms,newAlarm]); setEditingAlarm(null);
@@ -43,16 +53,18 @@ function Alarms() {
             : alarm
           )); 
           setEditingAlarm(null);
-        }}
-        
-        }
-        editingAlarm={editingAlarm} 
+        }}}
         onClose={() => {setIsCreatingAlarm(false); setEditingAlarm(null);} }/>
       }
       <div className={styles.alarms}>
         {alarms.map((alarm) => (
           <Alarm key={alarm.id} name={alarm.alarmName} time={alarm.alarmTime} repeat={alarm.repeatMode}
-          isEditing={()=> {setEditingAlarm(alarm); setIsCreatingAlarm(true);}}
+          isEditing={() => {setEditingAlarm(alarm); setIsCreatingAlarm(true);}}
+          deleteAlarm={() => {
+            setAlarms(prevAlarms => 
+              prevAlarms.filter(noDeletedAlarm =>
+            noDeletedAlarm.id !== alarm.id 
+          ))}}
           />
           
            

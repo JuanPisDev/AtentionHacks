@@ -34,6 +34,11 @@
     margin: 2% 0;
 }
 
+.alarmButtonsSection{
+    display: flex;
+    justify-content: left;
+}
+
 .editButton{
     width: 100px;
     height: 5vh;
@@ -47,7 +52,7 @@
     font-weight: bold;
     background-color: rgb(247, 233, 30);
     border-radius: 1rem;
-    margin: 2% 0;
+    margin: 2% 3% 2% 0%;
     text-shadow: 2px 4px 8px rgb(0, 0, 0);
     box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.507);
 

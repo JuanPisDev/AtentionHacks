@@ -10,11 +10,11 @@
     box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.507);
     position: absolute;
     z-index: 100;
-    position: absolute;
-    top: 50%;
+    position: fixed;
+    top: 35%;
     left: 50%;
     transform: translate(-50%, -50%); 
-
+    pointer-events: auto;
 }
 .alarmTitle{
     color: whitesmoke;
