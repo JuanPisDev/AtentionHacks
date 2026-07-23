@@ -47,7 +47,7 @@ function AlarmModal({onClose, onSave, editingAlarm}) {
 
   return (
     <>
-        <form id="myFormulary" className={styles.alarmModal} onSubmit={handleSubmit}>
+        <form id="myFormulary" className={styles.alarmModal} onSubmit={handleSubmit} onClick={(e) => e.stopPropagation()}>
             <label className={styles.alarmTitle} htmlFor="">Alarm Name</label>
             <input className={styles.alarmInput} type="text"  value={alarmName} onChange={ev => setAlarmName(ev.target.value)} required/>
             <label className={styles.alarmTitle} htmlFor="">Set Time</label>
