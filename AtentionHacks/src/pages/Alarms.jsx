@@ -2,14 +2,66 @@ import Alarm from "../components/AlarmsComponents/Alarm"
 import AlarmModal from "../components/AlarmsComponents/AlarmModalComponents/AlarmModal";
 import NewAlarmButton from "../components/AlarmsComponents/NewAlarmButton/NewAlarmButton";
 import HomeButton from "../components/HomeComponents/HomeButton";
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import styles from "../components/AlarmsComponents/AlarmsStyles/AlarmsStyles.module.css"
+import alarmSound from "../assets/media/alarmSound.mp3";
 
 function Alarms() {
 
   const [isCreatingAlarm, setIsCreatingAlarm] = useState(false);
   const [editingAlarm, setEditingAlarm] = useState(null);
-  const [alarms, setAlarms] = useState([]);
+  const [alarms, setAlarms] = useState(() => {
+    try {const savedAlarms = localStorage.getItem('myAlarms');
+    return savedAlarms ? JSON.parse(savedAlarms) : [];
+  } catch {
+    return [];
+  }
+  });
+
+  //Here i am working on the alarm for the alarms jeje
+const audioRef = useRef(new Audio(alarmSound));  
+const [currentTime, setCurrentTime] = useState(new Date());
+  
+  useEffect(() => {
+    const timer = setInterval(() => {setCurrentTime(new Date());}, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  // const formattedTime = new Intl.DateTimeFormat(navigator.language, {
+  //   hour: '2-digit',
+  //   minute: '2-digit',
+  //   hour12: true 
+  // }).format(currentTime);
+
+  const hours = currentTime.getHours().toString().padStart(2, "0");
+  const minutes = currentTime.getMinutes().toString().padStart(2,"0");
+
+  const formattedTime = `${hours}:${minutes}`;
+
+  useEffect(() =>{
+
+    audioRef.current.loop = true;
+    {alarms.forEach(alarm => {
+
+      if(alarm.repeatMode === "YES" && formattedTime === alarm.alarmTime)
+        {
+      audioRef.current.play().catch((error) => {
+        console.log("The navigator blocked the audio", error);
+      });
+    } else {
+      audioRef.current.pause();
+      audioRef.current.currentTime=0;
+    }
+    })}
+    
+    return () => {
+      audioRef.current.pause();
+    };
+  }, [formattedTime]);
+
+  useEffect(() => {
+    localStorage.setItem('myAlarms', JSON.stringify(alarms));
+  }, [alarms]);
 
   useEffect(() => {
   if (isCreatingAlarm) {
