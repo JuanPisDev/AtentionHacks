@@ -11,7 +11,7 @@ function Home() {
         <ServiceButton className={styles.serviceButton} serviceLink="" serviceName="Pomodoro" />
         <ServiceButton className={styles.serviceButton} serviceLink="/alarms" serviceName="Alarms"/>
         <ServiceButton className={styles.serviceButton} serviceLink="" serviceName="Meditation"/>
-        <ServiceButton className={styles.serviceButton} serviceLink="" serviceName="KanBan"/>
+        <ServiceButton className={styles.serviceButton} serviceLink="/Kanban" serviceName="Kanban"/>
         </div>
       </div>
     </div>

@@ -10,17 +10,19 @@ html{
     flex-direction: column;
     align-items: center;
     width: 90vw;
-    height: 90vh;
+    min-height: 90vh;
 }
 
 .title{
+    display: flex;
     color: whitesmoke;
     font-size: 3rem;
-    justify-content: center;
     text-align: center;
+    justify-content: center;
     text-shadow: 2px 4px 10px rgb(0, 0, 0);
-
+    line-height: 1;
 }
+
 
 .serviceSection{
     display: flex;

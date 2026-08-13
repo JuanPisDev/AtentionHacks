@@ -21,29 +21,26 @@ function Alarms() {
   //Here i am working on the alarm for the alarms jeje
 const audioRef = useRef(new Audio(alarmSound));  
 const [currentTime, setCurrentTime] = useState(new Date());
+const hours = currentTime.getHours().toString().padStart(2, "0");
+const minutes = currentTime.getMinutes().toString().padStart(2,"0");
+const formattedTime = `${hours}:${minutes}`;
+const shouldPlay = alarms.some(alarm => 
+  alarm.repeatMode === "YES" &&
+  alarm.alarmTime === formattedTime
+);
   
   useEffect(() => {
     const timer = setInterval(() => {setCurrentTime(new Date());}, 1000);
     return () => clearInterval(timer);
   }, []);
 
-  // const formattedTime = new Intl.DateTimeFormat(navigator.language, {
-  //   hour: '2-digit',
-  //   minute: '2-digit',
-  //   hour12: true 
-  // }).format(currentTime);
-
-  const hours = currentTime.getHours().toString().padStart(2, "0");
-  const minutes = currentTime.getMinutes().toString().padStart(2,"0");
-
-  const formattedTime = `${hours}:${minutes}`;
 
   useEffect(() =>{
 
     audioRef.current.loop = true;
     {alarms.forEach(alarm => {
 
-      if(alarm.repeatMode === "YES" && formattedTime === alarm.alarmTime)
+      if(shouldPlay)
         {
       audioRef.current.play().catch((error) => {
         console.log("The navigator blocked the audio", error);
