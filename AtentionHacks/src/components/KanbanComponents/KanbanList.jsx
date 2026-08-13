@@ -1,6 +1,6 @@
 import KanbanListItem from '../KanbanComponents/KanbanListItem'
 
-function KanbanList(listTitle, lists) {
+function KanbanList({listTitle}) {
   return (
     <>
       <div>
