@@ -4,7 +4,7 @@ function KanbanList({listTitle}) {
   return (
     <>
       <div>
-        <h1>{listTitle}</h1>
+        <h2>{listTitle}</h2>
         <div>
           
         </div>

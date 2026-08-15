@@ -6,6 +6,7 @@ import KanbanList from '../components/KanbanComponents/KanbanList'
 function Kanban() {
     const [lists, setLists] = useState([]);
     const [newList, setNewList] =useState("");
+    const [listName, setListName] = useState("");
     // const newListItemVar;
 
     function addNewList(list){
@@ -25,9 +26,9 @@ function Kanban() {
         </div>
         <label htmlFor="">Agregar Lista</label>
         <br />
-        <input type="text" />
+        <input type="text" value={listName} onChange={ev => setListName(ev.target.value)} />
         <br />
-        <button onClick={() => addNewList({id: 1, listTitle:'To Do'})}>Agregar Lista</button>
+        <button onClick={() => addNewList({id: crypto.randomUUID(), listTitle:listName})}>Agregar Lista</button>
         <br />
         <label htmlFor="">Lista a la que quieres agregar una tarea</label>
         <br />
