@@ -1,8 +1,8 @@
-function KanbanListItem(listTitle, lists) {
+function KanbanListItem({listItem}) {
   return (
     <>
       <div>
-        <p>{listItem}</p>
+        <p>{listItem.text}</p>
       </div>
     </>
   )

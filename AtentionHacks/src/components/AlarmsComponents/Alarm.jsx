@@ -1,6 +1,4 @@
-import { use } from "react";
 import styles from "../AlarmsComponents/AlarmsStyles/Alarm.module.css"
-import {useState, useEffect, useRef} from "react";
 
 function Alarm({name, time, repeat, isEditing, deleteAlarm }) {
 
