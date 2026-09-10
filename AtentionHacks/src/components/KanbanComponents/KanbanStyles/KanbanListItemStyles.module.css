@@ -1,0 +1,25 @@
+.listItem{
+    background-color: #555555;
+
+    border-radius: 10px;
+
+    padding: 10px 15px;
+
+    box-shadow: 1px 2px 5px rgba(0,0,0,0.3);
+
+    transition: transform 0.15s aese;
+}
+
+.listItem:hover{
+    transform: translateY(-2px);
+}
+
+.listItem p{
+    margin: 0;
+
+    color: whitesmoke;
+
+    font-size: 1rem;
+
+    word-wrap: break-word;
+}

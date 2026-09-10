@@ -43,8 +43,8 @@ function Kanban() {
     <>
       <h1 className={styles.title}>Your KanBan</h1>
       <NewAlarmButton onClick={() => {setCreatingList(true)}}/>
-      <div className='KanbanSection'>
-        <div>
+      <div >
+        <div className={styles.kanbanBoard}>
         {lists.map((list) => (
             <KanbanList
               key={list.id}

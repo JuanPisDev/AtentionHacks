@@ -1,7 +1,9 @@
+import styles from "../KanbanComponents/KanbanStyles/KanbanListItemStyles.module.css"
+
 function KanbanListItem({listItem}) {
   return (
     <>
-      <div>
+      <div className={styles.listItem}>
         <p>{listItem.text}</p>
       </div>
     </>

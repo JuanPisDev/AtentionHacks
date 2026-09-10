@@ -1,0 +1,41 @@
+
+.kanbanList{
+    width: 280px;
+    height: 450px;
+
+    background-color: #3a3a3a;
+
+    border-radius: 15px;
+
+    box-shadow: 2px 4px 10px rgb(0,0,0,0.4);
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+}
+
+.listTitle{
+    color: whitesmoke;
+
+    font-size: 1.4rem;
+
+    text-align: center;
+
+    margin: 0;
+    padding: 18px 10px;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.itemsContainer{
+    flex:1;
+
+    overflow-y: auto;
+
+    padding: 15px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
