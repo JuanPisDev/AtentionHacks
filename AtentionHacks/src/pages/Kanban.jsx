@@ -1,16 +1,49 @@
 import HomeButton from '../components/HomeComponents/HomeButton'
-import NewAlarmButton from '../components/AlarmsComponents/NewAlarmButton/NewAlarmButton'
-import { useState } from 'react';
+import NewElementButton from '../components/SharedComponents/NewElementButton.jsx'
+import { useState, useEffect } from 'react';
 import KanbanList from '../components/KanbanComponents/KanbanList'
-import KanbanModal from '../components/KanbanComponents/KanbanModal';
+import KanbanListModal from '../components/KanbanComponents/KanbanListModal.jsx';
 import styles from "../components/KanbanComponents/KanbanStyles/KanbanStyles.module.css"
 
 function Kanban() {
-    const [lists, setLists] = useState([]);
+    const [lists, setLists] = useState( () => {
+      try {
+        const savedLists = localStorage.getItem("myKanban");
+
+        return savedLists
+          ? JSON.parse(savedLists) 
+          : [
+            {
+              id: crypto.randomUUID(),
+              listTitle: "To Do",
+              items: []
+            },
+            {
+              id: crypto.randomUUID(),
+              listTitle: "Doing",
+              items: []
+            },
+            {
+              id: crypto.randomUUID(),
+              listTitle: "Done",
+              items: []
+            }
+          ];
+      } catch {
+        return [];
+      }
+    });
     const [newList, setNewList] =useState("");
     const [selectedList, setSelectedList] = useState("");
     const [listItem, setListItem] = useState("");
+    const [selectedItem, setSelectedItem] = useState("");
+    const [newItem, setNewItem] = useState("");
     const [creatingList, setCreatingList] = useState(false);
+    const [modalMode, setModalMode] = useState(null);
+
+    useEffect(()=> {
+      localStorage.setItem("myKanban", JSON.stringify(lists));
+    }, [lists]);
 
     function addNewList(list){
         const alreadyExist= lists.some(
@@ -28,7 +61,7 @@ function Kanban() {
     function addNewListItem(selectedList, listItem){
       setLists(prevLists =>
         prevLists.map(list =>
-          selectedList === list.listTitle
+          selectedList === list.id
           ? {
             ...list,
               items:[...list.items, 
@@ -39,30 +72,147 @@ function Kanban() {
           }
           : list
         ))}
+
+function editList(listId, newTitle){
+  setLists(prevLists =>
+    prevLists.map(list => 
+      list.id === listId
+      ? {
+        ...list,
+        listTitle: newTitle
+      }
+      :list
+    )
+  );
+}
+
+function deleteList(listId){
+  setLists(prevLists => 
+    prevLists.filter(list => list.id !== listId)
+  );
+}
+
+function openEditList(listId){
+
+        const list = lists.find(list => list.id === listId);
+
+        setSelectedList(listId);
+        setNewList(list.listTitle);
+        setModalMode("editList");
+        setCreatingList(true);
+
+      }
+
+  function openEditListItem(listId, itemId){
+    const list = lists.find(list => list.id === listId);
+
+
+    const item = list.items.find(item => item.id === itemId)
+
+
+    setSelectedList(listId);
+    setSelectedItem(itemId);
+    setNewItem(item.text);
+    setModalMode("editItem");
+    setCreatingList(true);
+  }
+
+  function editListItem(listId, itemId, newText){
+    setLists(prevLists =>
+      prevLists.map(list => 
+        list.id === listId
+        ? {
+          ...list,
+          items: list.items.map(item =>
+            item.id === itemId
+            ? {
+              ...item,
+              text: newText
+            }
+            : item
+          )
+        }
+        : list
+      )
+    );
+  }
+
+  function deleteListItem(listId, itemId){
+    setLists(prevLists =>
+      prevLists.map(list =>
+        list.id === listId
+        ? {
+          ...list,
+          items: list.items.filter(
+            item => item.id !== itemId
+          )
+        }
+        :list
+      )
+    )
+  }
+
   return (
     <>
       <h1 className={styles.title}>Your KanBan</h1>
-      <NewAlarmButton onClick={() => {setCreatingList(true)}}/>
-      <div >
-        <div className={styles.kanbanBoard}>
-        {lists.map((list) => (
-            <KanbanList
-              key={list.id}
-              listTitle={list.listTitle}
-              listsValues={list}
-            /> 
+      <div className={styles.buttonDiv}>
+        <NewElementButton 
+        buttonName={"New List"} 
+        onClick={() => {
+          setNewList("");
+          setSelectedList("");
+          setListItem("");
+          setCreatingList(true);
+          setModalMode("createList");
+          }}
+          />
+      </div>
+        <div className={styles.kanbanContainer}>
+          <div className={styles.kanbanBoard}>
+          {lists.map((list) => (
+              <KanbanList
+                key={list.id}
+                listId={list.id}
+                listTitle={list.listTitle}
+                listsValues={list}
+                deleteList={deleteList}
+                editList={editList}
+                openEditList={openEditList}
+                openItemModal={(listId)=> {
+                  setListItem("");
+                  setSelectedList(listId);
+                  setModalMode("createItem");
+                  setCreatingList(true);
+                }}
+                editListItem={editListItem}
+                deleteListItem={deleteListItem}
 
-          ))}
+                openEditListItem={openEditListItem}
+              /> 
+
+            ))}
+          </div>
         </div>
           {creatingList && 
           <div>
           
-            <KanbanModal 
+            <KanbanListModal 
+              modalMode={modalMode}
+
               newList={newList}
               setNewList={setNewList}
 
               selectedList={selectedList}
               setSelectedList={setSelectedList}
+
+              editList={editList}
+              editListItem = {editListItem}
+
+              selectedItem={selectedItem}
+              setSelectedItem={setSelectedItem}
+
+              newItem={newItem}
+              setNewItem={setNewItem}
 
               listItem={listItem}
               setListItem={setListItem}
@@ -70,12 +220,16 @@ function Kanban() {
               addNewList={addNewList}
               addNewListItem={addNewListItem}
 
-              onClose={() => setCreatingList(false)}
+              onClose={() => {
+                setCreatingList(false);
+                setModalMode(null);
+              }}
             />
           
           </div>}
-        <HomeButton />
-      </div>
+                  
+        <div className={styles.buttonDiv}><HomeButton /></div>
+        
     </>
   )
 }

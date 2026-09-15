@@ -1,6 +1,6 @@
 import Alarm from "../components/AlarmsComponents/Alarm"
 import AlarmModal from "../components/AlarmsComponents/AlarmModalComponents/AlarmModal";
-import NewAlarmButton from "../components/AlarmsComponents/NewAlarmButton/NewAlarmButton";
+import NewElementButton from "../components/SharedComponents/NewElementButton.jsx"
 import HomeButton from "../components/HomeComponents/HomeButton";
 import { useState, useEffect, useRef } from "react"
 import styles from "../components/AlarmsComponents/AlarmsStyles/AlarmsStyles.module.css"
@@ -80,7 +80,7 @@ const shouldPlay = alarms.some(alarm =>
     <>
       <h1 className={styles.title}>Alarms</h1>
       <div className={styles.alarmsSection}>
-      <NewAlarmButton onClick={() => {setIsCreatingAlarm(true); setEditingAlarm(null);}}/>
+      <NewElementButton buttonName={"Alarm"} onClick={() => {setIsCreatingAlarm(true); setEditingAlarm(null);}}/>
       {isCreatingAlarm && 
       <div className={styles.overlay} 
       onClick={()=> { setIsCreatingAlarm(false); setEditingAlarm(null);}}>

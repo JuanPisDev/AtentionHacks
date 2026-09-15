@@ -16,16 +16,41 @@
 }
 
 .listTitle{
+    display: flex;
     color: whitesmoke;
+    align-items: center;
 
     font-size: 1.4rem;
 
     text-align: center;
-
     margin: 0;
     padding: 18px 10px;
 
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.listTitle h2{
+    width: 70%;
+}
+
+.listTitle button{
+    width: 4rem;
+    height: 4rem;
+    font-size: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: #3a3a3a;
+    color: whitesmoke;
+    text-shadow: 2px 4px 10px rgb(0, 0, 0);
+}
+
+.listTitle button:hover{
+        text-shadow: none;
+        cursor: pointer;
+        background-color: rgb(36, 35, 35);
 }
 
 .itemsContainer{
