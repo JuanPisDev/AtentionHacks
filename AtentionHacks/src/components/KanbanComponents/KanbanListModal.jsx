@@ -25,7 +25,17 @@ function KanbanListModal({
         {modalMode === "editItem" && (
             
             <>
-                <form className={styles.kanbanModal}>
+                <form className={styles.kanbanModal} onSubmit={(ev)=>{
+
+                            ev.preventDefault();
+
+                            editListItem(
+                                selectedList,
+                                selectedItem,
+                                newItem
+                            );
+                            onClose();
+                        }}>
                     <label className={styles.kanbanTitle}>
                         Editar Tarea
                     </label>
@@ -33,18 +43,12 @@ function KanbanListModal({
                         className={styles.kanbanInput}
                         value={newItem}
                         onChange={ev => setNewItem(ev.target.value)}
+                        required
                     />
                     <button
-                        type="button"
+                        type="submit"
                         className={styles.kanbanButton}
-                        onClick={()=>{
-                            editListItem(
-                                selectedList,
-                                selectedItem,
-                                newItem
-                            );
-                            onClose();
-                        }}
+                        
                     >
                         Guardar
                     </button>
@@ -61,7 +65,13 @@ function KanbanListModal({
 
         {modalMode === "editList" && (
             <>
-                <form className={styles.kanbanModal}>
+                <form className={styles.kanbanModal} onSubmit={(ev)=>{
+
+                            ev.preventDefault();
+
+                            editList(selectedList,newList);
+                            onClose();
+                        }}>
                     <label className={styles.kanbanTitle}>
                         Editar Lista
                     </label>
@@ -69,14 +79,12 @@ function KanbanListModal({
                         className={styles.kanbanInput}
                         value={newList}
                         onChange={ev => setNewList(ev.target.value)}
+                        required
                     />
                     <button
-                        type="button"
+                        type="submit"
                         className={styles.kanbanButton}
-                        onClick={()=>{
-                            editList(selectedList,newList);
-                            onClose();
-                        }}
+                        
                     >
                         Guardar
                     </button>
@@ -93,22 +101,25 @@ function KanbanListModal({
 
         {modalMode === "createList" && (
             <>
-                <form action="" className={styles.kanbanModal} >
+                <form action="" className={styles.kanbanModal} onSubmit={(ev) =>{ 
 
-                    <label className={styles.kanbanTitle} htmlFor="">Agregar Lista</label>
-                    <input className={styles.kanbanInput} type="text" value={newList} onChange={ev => setNewList(ev.target.value)} />
+                        ev.preventDefault();
 
-                    <button 
-                        type="button" 
-                        className={styles.kanbanButton} 
-                        onClick={() =>{ 
                         addNewList({
                             id: crypto.randomUUID(), 
                             listTitle:newList, 
                             items:[]
                         });
                         onClose();
-                    }}
+                    }}>
+
+                    <label className={styles.kanbanTitle} htmlFor="">Agregar Lista</label>
+                    <input required className={styles.kanbanInput} type="text" value={newList} onChange={ev => setNewList(ev.target.value)} />
+
+                    <button 
+                        type="submit" 
+                        className={styles.kanbanButton} 
+                        
                     >Agregar Lista</button>
                     <button className={styles.kanbanButton} onClick={onClose}>Cerrar</button>
                 </form>
@@ -117,17 +128,20 @@ function KanbanListModal({
 
         {modalMode === "createItem" && (
             <>
-                <form action="" className={styles.kanbanModal} >
-                    <label className={styles.kanbanTitle} htmlFor="">Agregar tarea</label>
-                    <input className={styles.kanbanInput} type="text" value={listItem} onChange={ev => setListItem(ev.target.value)} />
-                    <button 
-                        type="button" 
-                        className={styles.kanbanButton} 
-                        onClick={() => {
+                <form action="" className={styles.kanbanModal} onSubmit={(ev) => {
+
+                                ev.preventDefault();
+
                                 addNewListItem(selectedList, listItem);
                                 onClose();
                             }
-                        }
+                        }>
+                    <label className={styles.kanbanTitle} htmlFor="">Agregar tarea</label>
+                    <input required className={styles.kanbanInput} type="text" value={listItem} onChange={ev => setListItem(ev.target.value)} />
+                    <button 
+                        type="submit" 
+                        className={styles.kanbanButton} 
+                        
                     >Agregar Tarea</button>
                     <button className={styles.kanbanButton} onClick={onClose}>Cerrar</button>
                 </form>

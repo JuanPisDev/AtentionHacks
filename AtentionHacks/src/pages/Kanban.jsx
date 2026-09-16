@@ -46,8 +46,16 @@ function Kanban() {
     }, [lists]);
 
     function addNewList(list){
+
+      const title = list.listTitle.trim();
+
+      if(!title){
+        alert("El nombre de la lista no puede estar vacío.");
+        return;
+      }
+
         const alreadyExist= lists.some(
-          existingList => existingList.listTitle === list.listTitle
+          existingList => existingList.listTitle.toLowerCase() === title.toLoweCase()
         );  
         if (alreadyExist){
           alert("La lista que intentas crear ya existe, por favor intentalo con otro nombre.")
@@ -59,6 +67,14 @@ function Kanban() {
 
     } 
     function addNewListItem(selectedList, listItem){
+
+      const text = listItem.trim();
+
+      if(!text){
+        alert("La tarea no puede estar vacía.");
+        return;
+      }
+
       setLists(prevLists =>
         prevLists.map(list =>
           selectedList === list.id
@@ -74,12 +90,21 @@ function Kanban() {
         ))}
 
 function editList(listId, newTitle){
+
+  
+    const title = newTitle.trim();
+
+    if(!title){
+      alert("El nombre de la tarea no puede estar vacío.");
+      return;
+    }
+
   setLists(prevLists =>
     prevLists.map(list => 
       list.id === listId
       ? {
         ...list,
-        listTitle: newTitle
+        listTitle: title
       }
       :list
     )
@@ -118,6 +143,14 @@ function openEditList(listId){
   }
 
   function editListItem(listId, itemId, newText){
+
+    const text = newText.trim();
+
+    if(!text){
+      alert("La tarea no puede estar vacía.")
+      return;
+    }
+
     setLists(prevLists =>
       prevLists.map(list => 
         list.id === listId
@@ -127,7 +160,7 @@ function openEditList(listId){
             item.id === itemId
             ? {
               ...item,
-              text: newText
+              text: text
             }
             : item
           )
