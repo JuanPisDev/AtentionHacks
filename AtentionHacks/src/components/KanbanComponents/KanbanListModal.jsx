@@ -14,13 +14,66 @@ function KanbanListModal({
     setNewItem,
     modalMode,
     newItem,
-    selectedItem
+    selectedItem,
+    targetList,
+    lists,
+    moveListItem,
+    setTargetList
 })
 
     {
     return(
         
         <>
+
+        {modalMode === "moveItem" && (
+            
+            <>
+                <form className={styles.kanbanModal} onSubmit={(ev)=>{
+
+                            ev.preventDefault();
+
+                            moveListItem(
+                                selectedList,
+                                selectedItem,
+                                targetList
+                            );
+                            onClose();
+                        }}>
+                    <label className={styles.kanbanTitle}>
+                        Mover Tarea
+                    </label>
+                    <select value={targetList} onChange={(ev) => setTargetList(ev.target.value)}>
+                        <option value="">
+                            Selecciona una lista
+                        </option>
+                        {
+                            lists.filter(list => list.id !== selectedList).map
+                            (
+                                list => (
+                                <option key={list.id} value={list.id}>
+                                    {list.listTitle}
+                                </option>
+                            ))
+                        }
+                    </select>
+                    <button
+                        type="submit"
+                        className={styles.kanbanButton}
+                        
+                    >
+                        Mover
+                    </button>
+                    <button
+                        type="button"
+                        className={styles.kanbanButton}
+                        onClick={onClose}
+                    >
+                        Cancelar
+                    </button>
+                </form>
+            </>
+        )}
 
         {modalMode === "editItem" && (
             
@@ -121,7 +174,7 @@ function KanbanListModal({
                         className={styles.kanbanButton} 
                         
                     >Agregar Lista</button>
-                    <button className={styles.kanbanButton} onClick={onClose}>Cerrar</button>
+                    <button type="button" className={styles.kanbanButton} onClick={onClose}>Cerrar</button>
                 </form>
             </>
         )}
@@ -143,7 +196,7 @@ function KanbanListModal({
                         className={styles.kanbanButton} 
                         
                     >Agregar Tarea</button>
-                    <button className={styles.kanbanButton} onClick={onClose}>Cerrar</button>
+                    <button type="button" className={styles.kanbanButton} onClick={onClose}>Cerrar</button>
                 </form>
             </>
         )}

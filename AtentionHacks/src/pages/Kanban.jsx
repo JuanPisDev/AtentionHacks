@@ -40,6 +40,7 @@ function Kanban() {
     const [newItem, setNewItem] = useState("");
     const [creatingList, setCreatingList] = useState(false);
     const [modalMode, setModalMode] = useState(null);
+    const [targetList, setTargetList] = useState("");
 
     useEffect(()=> {
       localStorage.setItem("myKanban", JSON.stringify(lists));
@@ -55,7 +56,7 @@ function Kanban() {
       }
 
         const alreadyExist= lists.some(
-          existingList => existingList.listTitle.toLowerCase() === title.toLoweCase()
+          existingList => existingList.listTitle.toLowerCase() === title.toLowerCase()
         );  
         if (alreadyExist){
           alert("La lista que intentas crear ya existe, por favor intentalo con otro nombre.")
@@ -83,7 +84,7 @@ function Kanban() {
               items:[...list.items, 
                 {
                   id:crypto.randomUUID(), 
-                  text:listItem
+                  text:text
                 }]
           }
           : list
@@ -185,6 +186,51 @@ function openEditList(listId){
     )
   }
 
+  function openMoveItemModal(listId, itemId){
+    setSelectedList(listId);
+    setSelectedItem(itemId);
+    setTargetList("");
+    setModalMode("moveItem");
+    setCreatingList(true);
+  }
+
+  function moveListItem(listId, itemId, targetListId){
+
+    const currentList = lists.find(list => list.id === listId);
+
+    const item = currentList.items.find(
+      item => item.id === itemId
+    );
+
+    setLists(prevLists =>
+      prevLists.map(list => {
+        if (list.id === listId)      
+        {
+          return {
+            ...list,
+          items: list.items.filter(
+            item => item.id !== itemId
+          )
+          };
+          }
+        
+
+        if (list.id === targetListId)
+        {
+          return{
+            ...list,
+              items:[...list.items, 
+                {
+                  id:itemId, 
+                  text:item.text
+                }]
+          }
+        }
+        return list;
+      })
+    )
+  }
+
   return (
     <>
       <h1 className={styles.title}>Your KanBan</h1>
@@ -219,7 +265,7 @@ function openEditList(listId){
                 }}
                 editListItem={editListItem}
                 deleteListItem={deleteListItem}
-
+                openMoveItemModal={openMoveItemModal}
                 openEditListItem={openEditListItem}
               /> 
 
@@ -252,6 +298,11 @@ function openEditList(listId){
 
               addNewList={addNewList}
               addNewListItem={addNewListItem}
+
+              moveListItem={moveListItem}
+              lists={lists}
+              targetList={targetList}
+              setTargetList={setTargetList}
 
               onClose={() => {
                 setCreatingList(false);

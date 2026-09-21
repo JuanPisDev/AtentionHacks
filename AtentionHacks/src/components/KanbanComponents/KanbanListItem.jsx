@@ -1,11 +1,21 @@
 import styles from "../KanbanComponents/KanbanStyles/KanbanListItemStyles.module.css"
 
-function KanbanListItem({listItem, listId, deleteListItem, openEditListItem}) {
+function KanbanListItem({listItem, listId, deleteListItem, openEditListItem, openMoveItemModal}) {
   return (
     <>
       <div className={styles.listItem}>
-        <p>{listItem.text}</p>
         <button
+          type="button"
+          className={styles.lisItemText}
+          onClick={() => openMoveItemModal(listId, listItem.id)}
+        
+        >
+          
+          {listItem.text}
+        
+        </button>
+        <div className={styles.editButtons}>
+        <button 
           onClick={() => openEditListItem(listId, listItem.id)}
         >
           ✏️
@@ -15,6 +25,7 @@ function KanbanListItem({listItem, listId, deleteListItem, openEditListItem}) {
         >
           🗑
         </button>
+        </div>
       </div>
     </>
   )

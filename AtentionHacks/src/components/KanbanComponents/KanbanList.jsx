@@ -8,6 +8,7 @@ function KanbanList({
   openItemModal,
   openEditList,
   openEditListItem,
+  openMoveItemModal,
   deleteList,
   deleteListItem,
   editListItem
@@ -31,21 +32,24 @@ function KanbanList({
                 editListItem={editListItem}
                 deleteListItem={deleteListItem}
                 openEditListItem={openEditListItem}
+                openMoveItemModal={openMoveItemModal}
               />
           ))}          
         </div>
-          <button
+        <div className={styles.editButtons}>
+          <button className={styles.editButton}
             onClick={() => {openEditList(listId)}}
           >
             ✏️
           </button>
-        <button onClick={ () => {
+        <button  className={styles.editButton} onClick={ () => {
           if(confirm(`¿Eliminar la lista "${listTitle}"?`)){
             deleteList(listId);
           }
         }}>
             🗑
         </button>
+        </div>
       </div>
     </>
   )
