@@ -10,7 +10,7 @@ function Home() {
         <div className={styles.serviceSection}>
         <ServiceButton className={styles.serviceButton} serviceLink="" serviceName="Pomodoro" />
         <ServiceButton className={styles.serviceButton} serviceLink="/alarms" serviceName="Alarms"/>
-        <ServiceButton className={styles.serviceButton} serviceLink="" serviceName="Meditation"/>
+        <ServiceButton className={styles.serviceButton} serviceLink="/Meditation" serviceName="Meditation"/>
         <ServiceButton className={styles.serviceButton} serviceLink="/Kanban" serviceName="Kanban"/>
         </div>
       </div>

@@ -6,6 +6,11 @@ import KanbanListModal from '../components/KanbanComponents/KanbanListModal.jsx'
 import styles from "../components/KanbanComponents/KanbanStyles/KanbanStyles.module.css"
 
 function Kanban() {
+
+    useEffect(()=> {
+      localStorage.setItem("myKanban", JSON.stringify(lists));
+    }, [lists]);
+
     const [lists, setLists] = useState( () => {
       try {
         const savedLists = localStorage.getItem("myKanban");
@@ -42,9 +47,7 @@ function Kanban() {
     const [modalMode, setModalMode] = useState(null);
     const [targetList, setTargetList] = useState("");
 
-    useEffect(()=> {
-      localStorage.setItem("myKanban", JSON.stringify(lists));
-    }, [lists]);
+    
 
     function addNewList(list){
 
