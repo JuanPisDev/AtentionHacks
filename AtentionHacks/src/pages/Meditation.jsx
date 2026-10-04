@@ -5,7 +5,7 @@ import  { useEffect, useState } from "react";
 function Meditation() {
 
   const [rhythmTime, setRhythmTime] = useState(null);
-  const [usingRhythm, setUsingRhythm] = useState(false);
+  const [usingRhythm, setUsingRhythm] = useState(null);
   const [selectedRhythm, setSelectedRhytm] = useState(null);
 
   const [rhythms, setRhythms] = useState(() => {
@@ -67,7 +67,8 @@ function Meditation() {
     rhythmTime={rhythmTime}
     setRhythmTime={setRhythmTime}
     setUsingRhythm={setUsingRhythm}
-
+    usingRhythm={usingRhythm}
+    onClose={() => setUsingRhythm(false)}
     />
   )}
   <div>

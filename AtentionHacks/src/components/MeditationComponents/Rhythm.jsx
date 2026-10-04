@@ -2,7 +2,7 @@ function Rhythm({rhythm, setSelectedRhythm, setUsingRhythm}){
 
     function handleSelectRhythm() {
         setSelectedRhythm(rhythm);
-        setUsingRhythm(true);
+        setUsingRhythm("setTime");
     }
 
     return (
