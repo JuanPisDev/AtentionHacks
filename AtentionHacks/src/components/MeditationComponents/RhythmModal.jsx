@@ -3,10 +3,6 @@ import styles from "../MeditationComponents/styles/RhythmModalStyles.module.css"
 
 function RhythmModal({rhythm, rhythmTime, setRhythmTime, usingRhythm, setUsingRhythm, onClose}){
 
-    function handleSelectTime() {
-        setUsingRhythm("meditating");
-    }
-
     function handleStartMeditation(){
         setRemainingTime(rhythmTime * 60);
         setCurrentPhase("inhale");
@@ -30,6 +26,53 @@ function RhythmModal({rhythm, rhythmTime, setRhythmTime, usingRhythm, setUsingRh
         }
     }
 
+    function getBreatheScale(){
+     
+        if (currentPhase === "inhale"){
+            return "scale(1.5)"
+        }
+        
+        if (currentPhase === "exhale"){
+            return "scale(1)"
+        }
+            return "scale(1.5)"   
+    }
+
+    function getPhaseName(){
+        if (currentPhase === "inhale"){
+            return "INHALA"
+        }
+        if (currentPhase === "holIn"){
+            return "MANTÉN";
+        }
+        if (currentPhase === "exhale"){
+            return "EXHALA";
+        }
+        if (currentPhase === "holdOut"){
+            return "MANTÉN";
+        }
+    }
+
+    function getNextValidPhase(phase){
+        let nextIndex = (phase.indexOf(phase) + 1) % phases.length;
+        let nextPhase = phases[nextIndex];
+
+        while (getPhaseDuration(nextPhase) === 0){
+            nextIndex = (nextIndex + 1) % phases.length;
+            nextPhase = phases[nextIndex];
+        }
+
+        return nextPhase;
+    }
+    
+    function handleStopMeditation(){
+        setUsingRhythm("finished");
+        setRemainingTime(0);
+        setPhaseTime(0);
+    }
+
+    
+
     const [remainingTime, setRemainingTime] = useState(0);
     const [currentPhase, setCurrentPhase] = useState("inhale");
     const [phaseTime, setPhaseTime] = useState(0);
@@ -44,7 +87,26 @@ function RhythmModal({rhythm, rhythmTime, setRhythmTime, usingRhythm, setUsingRh
         if (usingRhythm !== "meditating") return;
 
         const interval = setInterval(() => {
-            setRemainingTime(prevTime => prevTime -1);
+            setRemainingTime(prevTime => {
+                if (prevTime <= 1){
+                    setUsingRhythm("finished");
+                    return 0;
+                }
+                return prevTime -1;
+            });
+
+        setPhaseTime(prevPhaseTime => {
+        if (prevPhaseTime <= 1) {
+
+            const newPhase = getNextValidPhase(currentPhase);
+
+            setCurrentPhase(newPhase);
+            return getPhaseDuration(newPhase);
+        }
+
+        return prevPhaseTime - 1 ;
+    })
+
         }, 1000);
 
         return () => clearInterval(interval);
@@ -85,25 +147,37 @@ function RhythmModal({rhythm, rhythmTime, setRhythmTime, usingRhythm, setUsingRh
                     <div 
                         className={styles.breatheCircle}
                         style={{
-                            transform:
-                                currentPhase === "inhale"
-                                 ? "scale(1.5)"
-                                 : currentPhase === "exhale"
-                                    ? "scale(1)"
-                                    : "scale(1.5)"
+                            transform: getBreatheScale()
                         }}
-                    >
-                             ●
+                    ><p>
+                             ● 
+                          ●     ● 
+                        ●         ● 
                           ●     ●
-                        ●         ●
-                          ●     ●
                              ●
+                        </p>
                     </div>
+                    <h3>{getPhaseName()}</h3>
                     <div>
-                        {String(minutes).padStart(2,"0")};
+                        {String(minutes).padStart(2,"0")}:
                         {String(seconds).padStart(2,"0")}
                     </div>
+                    <button
+                        type="button"
+                        onClick={handleStopMeditation}
+                    >
+                        Salir
+                    </button>
                 </>
+                )}
+                {usingRhythm === "finished" && (
+                    <>
+                    <h2>Sesión Terminada</h2>
+                    <p>Has completado tu meditación, ¡Bien hecho!.</p>
+                    <button type="button" onClick={onClose}>
+                        Cerrar
+                    </button>
+                    </>
                 )}
         </>
     )
