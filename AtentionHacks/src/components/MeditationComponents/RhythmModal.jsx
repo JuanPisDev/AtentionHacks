@@ -42,7 +42,7 @@ function RhythmModal({rhythm, rhythmTime, setRhythmTime, usingRhythm, setUsingRh
         if (currentPhase === "inhale"){
             return "INHALA"
         }
-        if (currentPhase === "holIn"){
+        if (currentPhase === "holdIn"){
             return "MANTÉN";
         }
         if (currentPhase === "exhale"){
@@ -51,10 +51,11 @@ function RhythmModal({rhythm, rhythmTime, setRhythmTime, usingRhythm, setUsingRh
         if (currentPhase === "holdOut"){
             return "MANTÉN";
         }
+        return 0;
     }
 
     function getNextValidPhase(phase){
-        let nextIndex = (phase.indexOf(phase) + 1) % phases.length;
+        let nextIndex = (phases.indexOf(phase) + 1) % phases.length;
         let nextPhase = phases[nextIndex];
 
         while (getPhaseDuration(nextPhase) === 0){
@@ -89,7 +90,6 @@ function RhythmModal({rhythm, rhythmTime, setRhythmTime, usingRhythm, setUsingRh
         const interval = setInterval(() => {
             setRemainingTime(prevTime => {
                 if (prevTime <= 1){
-                    setUsingRhythm("finished");
                     return 0;
                 }
                 return prevTime -1;
@@ -110,7 +110,13 @@ function RhythmModal({rhythm, rhythmTime, setRhythmTime, usingRhythm, setUsingRh
         }, 1000);
 
         return () => clearInterval(interval);
-    }, [usingRhythm]);
+    }, [usingRhythm, currentPhase, rhythm]);
+
+    useEffect(() => {
+        if (usingRhythm === "meditating" && remainingTime === 0){
+            setUsingRhythm("finished");
+        }
+    },[remainingTime, usingRhythm, setUsingRhythm]);
 
 
     return(
@@ -147,17 +153,13 @@ function RhythmModal({rhythm, rhythmTime, setRhythmTime, usingRhythm, setUsingRh
                     <div 
                         className={styles.breatheCircle}
                         style={{
-                            transform: getBreatheScale()
+                            transform: getBreatheScale(),
+                            transitionDuration: `${getPhaseDuration(currentPhase)}s`
                         }}
-                    ><p>
-                             ● 
-                          ●     ● 
-                        ●         ● 
-                          ●     ●
-                             ●
-                        </p>
+                    >
                     </div>
                     <h3>{getPhaseName()}</h3>
+                    <p>{phaseTime}</p>
                     <div>
                         {String(minutes).padStart(2,"0")}:
                         {String(seconds).padStart(2,"0")}
