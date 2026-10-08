@@ -1,0 +1,41 @@
+.rhythmCard{
+    width: 100%;
+    min-height: 150px;
+
+    border: none;
+    border-radius: 1rem;
+
+    padding: 20px;
+
+    background-color: rgb(60, 60, 60);
+
+    box-shadow: 2px 4px 10px rgba(0,0,0,0.5);
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.rhythmCard:hover{
+    transform: translateY(-4px);
+
+    box-shadow: 4px 8px 15px rgba(0,0,0,0.6);
+}
+
+.rhythmCard:active{
+    transform: translateY(0);
+
+    box-shadow: inset 2px 4px 8px rgba(0,0,0,0.4);
+}
+
+.rhythmTitle {
+    color: whitesmoke; 
+    margin: 0 0 15px;
+}
+
+.rhythmPattern{
+    color: whitesmoke;
+    font-size: 1.2rem;
+}

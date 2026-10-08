@@ -8,6 +8,7 @@ function RhythmModal({rhythm, rhythmTime, setRhythmTime, usingRhythm, setUsingRh
         setCurrentPhase("inhale");
         setPhaseTime(rhythm.inhale);
         setUsingRhythm("meditating");
+        setStartBreathing(false);
 
     }
 
@@ -35,7 +36,11 @@ function RhythmModal({rhythm, rhythmTime, setRhythmTime, usingRhythm, setUsingRh
         if (currentPhase === "exhale"){
             return "scale(1)"
         }
-            return "scale(1.5)"   
+        if (currentPhase === "holdIn"){
+            return "scale(1.5)"
+        }
+        if (currentPhase === "holdOut")
+            return "scale(1)"   
     }
 
     function getPhaseName(){
@@ -80,9 +85,17 @@ function RhythmModal({rhythm, rhythmTime, setRhythmTime, usingRhythm, setUsingRh
     const minutes = Math.floor(remainingTime / 60);
     const seconds = remainingTime % 60;
     const phases = ["inhale", "holdIn", "exhale", "holdOut"];
-    const currentIndex = phases.indexOf(currentPhase);
-    const nextIndex = (currentIndex + 1) % phases.length;
-    const nextPhase = phases[nextIndex];
+    const [startBreathing, setStartBreathing] = useState(false);
+
+    useEffect(() => {
+        if(usingRhythm !== "meditating") return;
+
+        const timeout = setTimeout(() => {
+            setStartBreathing(true);
+        }, 100)
+
+        return () => clearTimeout(timeout);
+    },[usingRhythm]);
 
     useEffect(() => {
         if (usingRhythm !== "meditating") return;
@@ -153,7 +166,9 @@ function RhythmModal({rhythm, rhythmTime, setRhythmTime, usingRhythm, setUsingRh
                     <div 
                         className={styles.breatheCircle}
                         style={{
-                            transform: getBreatheScale(),
+                            transform:  startBreathing 
+                            ? getBreatheScale()
+                            : "scale(1)",
                             transitionDuration: `${getPhaseDuration(currentPhase)}s`
                         }}
                     >

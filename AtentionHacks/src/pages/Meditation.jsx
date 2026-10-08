@@ -1,6 +1,7 @@
 import Rhythm from "../components/MeditationComponents/Rhythm";
 import RhythmModal from "../components/MeditationComponents/RhythmModal";
 import  { useEffect, useState } from "react";
+import styles from "../components/MeditationComponents/styles/MeditationStyles.module.css"
 
 function Meditation() {
 
@@ -59,7 +60,7 @@ function Meditation() {
 
   return (
     <>
-  <h1>Meditation</h1>
+  <h1 className={styles.title}>Meditation</h1>
   {usingRhythm && (
     <RhythmModal 
 
@@ -71,8 +72,8 @@ function Meditation() {
     onClose={() => setUsingRhythm(false)}
     />
   )}
-  <div>
-    <div>
+  <div className={styles.meditationContainer}>
+    <div className={styles.rhythmContainer}>
       {rhythms.map((rhythm) => (
         <Rhythm
         key={rhythm.id}

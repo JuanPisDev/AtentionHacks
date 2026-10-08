@@ -1,0 +1,19 @@
+.title {
+    color: whitesmoke;
+    font-size: 3rem;
+    text-align: center;
+    text-shadow: 2px 4px 10px rgba(0,0,0);
+}
+
+.meditationContainer {
+    width: 90vw;
+    margin: 0 auto; 
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.rhythmContainer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 20px; 
+}
