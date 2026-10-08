@@ -135,16 +135,19 @@ function RhythmModal({rhythm, rhythmTime, setRhythmTime, usingRhythm, setUsingRh
     return(
         <>
             {usingRhythm === "setTime" && (
-                    <>
-                        <form action="" 
+                    <div className={styles.modalOverlay}>
+                        <form className={styles.rhythmModal} action="" 
                         
                         onSubmit={(ev)=>{
                             ev.preventDefault();
                             handleStartMeditation();
                             
                         }}>
-                            <label htmlFor="">¿Cuanto tiempo quieres meditar?</label>
+                            <h2 className={styles.modalTitle}>Preparar tu Meditación</h2>
+                            <label className={styles.modalLabel} htmlFor="meditationTime">¿Cuanto tiempo quieres meditar?</label>
                             <input 
+                            id="meditationTime"
+                            className={styles.modalInput}
                             type="number" 
                             min="1" 
                             value={rhythmTime}
@@ -153,48 +156,54 @@ function RhythmModal({rhythm, rhythmTime, setRhythmTime, usingRhythm, setUsingRh
                             />
                             <button 
                             type="submit"
+                            className={styles.modalButton}
                             >
                                 Empezar
                             </button>
-                            <button type="button" onClick={onClose}>Cancelar</button>
+                            <button className={styles.modalButton} type="button" onClick={onClose}>Cancelar</button>
                         </form>
-                    </>
+                    </div>
                 )}
                 {usingRhythm === "meditating" && (
-                <>
-                    <h2>{rhythm.rhythmTitle}</h2>
-                    <div 
-                        className={styles.breatheCircle}
-                        style={{
-                            transform:  startBreathing 
-                            ? getBreatheScale()
-                            : "scale(1)",
-                            transitionDuration: `${getPhaseDuration(currentPhase)}s`
-                        }}
-                    >
+                <div className={styles.modalOverlay}>
+                    <div className={styles.rhythmModal}>
+                        <h2 className={styles.meditationTitle}>{rhythm.rhythmTitle}</h2>
+                        <div 
+                            className={styles.breatheCircle}
+                            style={{
+                                transform:  startBreathing 
+                                ? getBreatheScale()
+                                : "scale(1)",
+                                transitionDuration: `${getPhaseDuration(currentPhase)}s`
+                            }}
+                        >
+                        </div>
+                        <h3 className={styles.phaseName}>{getPhaseName()}</h3>
+                        <p className={styles.phaseTime}>{phaseTime}</p>
+                        <div className={styles.remainingTime}>
+                            {String(minutes).padStart(2,"0")}:
+                            {String(seconds).padStart(2,"0")}
+                        </div>
+                        <button
+                            type="button"
+                            className={styles.modalButton}
+                            onClick={handleStopMeditation}
+                        >
+                            Salir
+                        </button>
                     </div>
-                    <h3>{getPhaseName()}</h3>
-                    <p>{phaseTime}</p>
-                    <div>
-                        {String(minutes).padStart(2,"0")}:
-                        {String(seconds).padStart(2,"0")}
-                    </div>
-                    <button
-                        type="button"
-                        onClick={handleStopMeditation}
-                    >
-                        Salir
-                    </button>
-                </>
+                </div>
                 )}
                 {usingRhythm === "finished" && (
-                    <>
-                    <h2>Sesión Terminada</h2>
-                    <p>Has completado tu meditación, ¡Bien hecho!.</p>
-                    <button type="button" onClick={onClose}>
-                        Cerrar
-                    </button>
-                    </>
+                    <div className={styles.modalOverlay}>
+                        <div className={styles.rhythmModal}>
+                            <h2>Sesión Terminada</h2>
+                            <p>Has completado tu meditación, ¡Bien hecho!.</p>
+                            <button className={styles.modalButton} type="button" onClick={onClose}>
+                                Cerrar
+                            </button>
+                        </div>
+                    </div>
                 )}
         </>
     )

@@ -2,7 +2,112 @@
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    background-color: gray;
+    background-color: whitesmoke;
     margin: 40px auto;
     transition: transform 1s linear;
+}
+
+.modalOverlay{
+    position: fixed;
+    inset:0;
+
+    background-color: rgba(0,0,0,0.6);
+
+    display:flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 100;
+}
+
+.rhythmModal{
+    width: 350px;
+    min-height: 300px;
+
+    padding: 30px;
+
+    border-radius: 1rem;
+
+    background-color: rgb(45, 45, 45);
+
+    box-shadow: 2px 4px 20px rgba(0,0,0,0.6); 
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    box-sizing: border-box;
+}
+
+.modalTitle{
+    color: whitesmoke;
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+    text-align: center;
+    text-shadow: 2px 3px 8px black;
+
+}
+
+.modalLabel{
+    color:whitesmoke;
+    font-size: 1.1rem;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.modalInput{
+    width: 100px;
+    height: 40px;
+
+    border: none;
+    border-radius: 0.5rem;
+
+    text-align: center;
+    font-size: 1.3rem;
+
+    margin-bottom: 25px;
+}
+
+.modalButton{
+    width: 200px;
+    height: 40px;
+
+    margin: 8px;
+
+    border: none;
+    border-radius: 2rem;
+    
+    font-size: 1.1rem;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease;
+        box-shadow: 0.2s ease;
+
+}
+
+.modalButton:hover{
+    transform: translateY(-2px);
+    box-shadow:2px 4px 10px rgba(0,0,0,0.5);
+
+}
+
+.modalButton:active{
+    transform: translateY(0);
+    box-shadow: inset 2px 4px 8px rgba(0,0,0,0.5);
+}
+
+.meditationTitle{
+    color: whitesmoke;
+}
+
+.phaseName{
+        color: whitesmoke;
+
+}
+.phaseTime{
+    color: whitesmoke;
+    font-size: 2rem;
+    font-weight: bold;
 }
