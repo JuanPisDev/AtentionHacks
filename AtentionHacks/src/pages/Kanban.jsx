@@ -1,17 +1,14 @@
-import HomeButton from '../components/HomeComponents/HomeButton'
-import NewElementButton from '../components/SharedComponents/NewElementButton.jsx'
+import HomeButton from '../components/HomeComponents/HomeButton';
+import NewElementButton from '../components/SharedComponents/NewElementButton.jsx';
 import { useState, useEffect } from 'react';
-import KanbanList from '../components/KanbanComponents/KanbanList'
+import KanbanList from '../components/KanbanComponents/KanbanList';
 import KanbanListModal from '../components/KanbanComponents/KanbanListModal.jsx';
-import styles from "../components/KanbanComponents/KanbanStyles/KanbanStyles.module.css"
+import styles from "../components/KanbanComponents/KanbanStyles/KanbanStyles.module.css";
 
 function Kanban() {
 
-    useEffect(()=> {
-      localStorage.setItem("myKanban", JSON.stringify(lists));
-    }, [lists]);
-
     const [lists, setLists] = useState( () => {
+
       try {
         const savedLists = localStorage.getItem("myKanban");
 
@@ -47,7 +44,9 @@ function Kanban() {
     const [modalMode, setModalMode] = useState(null);
     const [targetList, setTargetList] = useState("");
 
-    
+    useEffect(()=> {
+      localStorage.setItem("myKanban", JSON.stringify(lists));
+    }, [lists]);
 
     function addNewList(list){
 

@@ -151,7 +151,9 @@ function RhythmModal({rhythm, rhythmTime, setRhythmTime, usingRhythm, setUsingRh
                             type="number" 
                             min="1" 
                             value={rhythmTime}
-                            onChange={ev => setRhythmTime(Number(ev.target.value))} 
+                            onChange={ev =>{ 
+                                const value = ev.target.value;
+                                setRhythmTime( value === "" ? "" : Number(value))}} 
                                 required
                             />
                             <button 
@@ -197,8 +199,8 @@ function RhythmModal({rhythm, rhythmTime, setRhythmTime, usingRhythm, setUsingRh
                 {usingRhythm === "finished" && (
                     <div className={styles.modalOverlay}>
                         <div className={styles.rhythmModal}>
-                            <h2>Sesión Terminada</h2>
-                            <p>Has completado tu meditación, ¡Bien hecho!.</p>
+                            <h2 className={styles.meditationTitle} >Sesión Terminada</h2>
+                            <p className={styles.finishedText}>Has completado tu meditación ¡Bien hecho!</p>
                             <button className={styles.modalButton} type="button" onClick={onClose}>
                                 Cerrar
                             </button>

@@ -2,10 +2,11 @@ import Rhythm from "../components/MeditationComponents/Rhythm";
 import RhythmModal from "../components/MeditationComponents/RhythmModal";
 import  { useEffect, useState } from "react";
 import styles from "../components/MeditationComponents/styles/MeditationStyles.module.css"
+import HomeButton from "../components/HomeComponents/HomeButton";
 
 function Meditation() {
 
-  const [rhythmTime, setRhythmTime] = useState(null);
+  const [rhythmTime, setRhythmTime] = useState("");
   const [usingRhythm, setUsingRhythm] = useState(null);
   const [selectedRhythm, setSelectedRhytm] = useState(null);
 
@@ -83,6 +84,9 @@ function Meditation() {
         />
       ))}
     </div>
+  </div>
+  <div className={styles.HomeButton}>
+    <HomeButton />
   </div>
     </>
   )

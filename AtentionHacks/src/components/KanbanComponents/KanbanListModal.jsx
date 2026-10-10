@@ -43,7 +43,7 @@ function KanbanListModal({
                     <label className={styles.kanbanTitle}>
                         Mover Tarea
                     </label>
-                    <select value={targetList} onChange={(ev) => setTargetList(ev.target.value)}>
+                    <select value={targetList} onChange={(ev) => setTargetList(ev.target.value)} required>
                         <option value="">
                             Selecciona una lista
                         </option>
