@@ -8,8 +8,8 @@ function Home() {
       <div className={styles.menu}>
         <h1 className={styles.title}>Atention Hacks</h1>
         <div className={styles.serviceSection}>
-        <ServiceButton className={styles.serviceButton} serviceLink="" serviceName="Pomodoro" />
-        <ServiceButton className={styles.serviceButton} serviceLink="/alarms" serviceName="Alarms"/>
+        <ServiceButton className={styles.serviceButton} serviceLink="/Pomodoro" serviceName="Pomodoro" />
+        <ServiceButton className={styles.serviceButton} serviceLink="/Alarms" serviceName="Alarms"/>
         <ServiceButton className={styles.serviceButton} serviceLink="/Meditation" serviceName="Meditation"/>
         <ServiceButton className={styles.serviceButton} serviceLink="/Kanban" serviceName="Kanban"/>
         </div>
