@@ -136,7 +136,7 @@ function RhythmModal({rhythm, rhythmTime, setRhythmTime, usingRhythm, setUsingRh
         <>
             {usingRhythm === "setTime" && (
                     <div className={styles.modalOverlay}>
-                        <form className={styles.rhythmModal} action="" 
+                        <form className={styles.rhythmModal} 
                         
                         onSubmit={(ev)=>{
                             ev.preventDefault();
