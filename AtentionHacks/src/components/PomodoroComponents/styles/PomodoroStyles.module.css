@@ -1,6 +1,25 @@
 .pageTitle {
     color: whitesmoke;
-    font-size: 3rem;
+    font-size: clamp(2rem, 5vw, 3rem);
     text-align: center;
-    text-shadow: 2px 4px 10px rgba(0,0,0);
+    text-shadow: 3px 3px 4px rgba(0,0,0);
+    margin: 2rem 0;
+    font-weight: 800;
+}
+
+.pomodoroOptions{
+    width: min(90%, 900px);
+    margin: 3rem auto;
+    display: grid; 
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+    align-items: stretch;
+}
+
+@media(max-width: 650px){
+    .pomodoroOptions{
+        grid-template-columns: 1fr;
+        width: min(85%, 350px);
+        gap: 1rem;
+    }
 }

@@ -52,7 +52,7 @@ function Pomodoro(){
                     onClose={() => {setSelectedPomodoro(null); setUsingPomodoro(null);}}
                 />
             }
-            <div>
+            <div className={styles.pomodoroOptions}>
                 {pomodoros.map((pomodoro) => (
                     <PomodoroModule
                         key={pomodoro.id}
