@@ -64,7 +64,9 @@ function Pomodoro(){
                     />
                 ))}
             </div>
-            <HomeButton />
+            <div className={styles.homeButton}>
+                <HomeButton />
+            </div>
         </>
     )
 }

@@ -16,6 +16,11 @@
     align-items: stretch;
 }
 
+.homeButton{
+    display: flex;
+    justify-content: center;
+}
+
 @media(max-width: 650px){
     .pomodoroOptions{
         grid-template-columns: 1fr;
