@@ -1,19 +1,24 @@
 function SignInForm(){
+
+    function handleSubmit(){
+        
+    }
+
     return(
         <>
-            <form action="">
-                <label htmlFor="emailSignUp">
+            <form onSubmit={handleSubmit}>
+                <label htmlFor="emailSignIn">
                     Correo Electrónico
                 </label>
-                <input id="emailSignUp" type="email" />
+                <input id="emailSignIn" type="email" name="email" autoComplete="email" required/>
                 <label htmlFor="passwordSignIn">
                     Contraseña
                 </label>
-                <input id="passwordSignIn" type="password" />
-                <button>
+                <input id="passwordSignIn" name="password" type="password" autoComplete="current-password" required/>
+                <button type="submit">
                     Ingresar
                 </button>
-                <a href="">Olvidé mi contraseña</a>
+                <a href="/forgot-password">Olvidé mi contraseña</a>
             </form>
         </>
     )

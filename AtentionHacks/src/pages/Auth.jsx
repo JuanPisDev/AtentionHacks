@@ -5,36 +5,36 @@ import styles from "../components/AuthComponents/styles/AuthStyles.module.css"
 
 function Auth(){
 
-    const [action, setAction ] = useState("signUp");
+    const [action, setAction ] = useState("signIn");
 
     return(
-        <>
-            
-            
-            <header>
-                <p>Bienvenido a AtentionHacks</p>
+        <div className={styles.auth}>
+            <header className={styles.nav}>
+                <p>Bienvenido a <br /><span> AtentionHacks </span> </p>
             </header>
-            <main>
-                    <section>
-                        <div>
-                            <button onClick={() => setAction("signIn")}>Ingresar</button>
-                            <button onClick={() => setAction("signUp")}>Registrarme</button>
+            <main className={styles.main}>
+                    <section className={styles.authSection}>
+                        <div className={styles.buttons}>
+                            <button  className={styles.signInButton} type="button" onClick={() => setAction("signIn")} aria-pressed={action === "signIn"}>Ingresar</button>
+                            <button className={styles.signUpButton} type="button" onClick={() => setAction("signUp")} aria-pressed={action === "signUp"}>Registrarme </button> 
                         </div>
-                        <div className={styles.mainLeft}>
-                            <p>{action === "signIn" ? "Ingresa a tu cuenta" : "Registrate es muy fácil :D"}</p>
-                        </div>
-                        <div className={styles.mainRight}>
-                            {action === "signIn" ? <SignIn /> : <SignUp />}
+                        <div className={styles.userInfoSection}>
+                            <div className={styles.mainLeft}>
+                                <p>{action === "signIn" ? "Ingresa a tu cuenta" : "Registrate, ¡es muy fácil! :D"}</p>
+                            </div>
+                            <div className={styles.mainRight}>
+                                {action === "signIn" ? <SignIn /> : <SignUp />}
+                            </div>
                         </div>
                     </section>
                 
             </main>
-            <footer>
-                Made By @JuanPisDev
+            <footer className={styles.footer}>
+                <p>Made By @JuanPisDev</p>
             </footer>
             
             
-        </>
+        </ div>
     )
 }
 

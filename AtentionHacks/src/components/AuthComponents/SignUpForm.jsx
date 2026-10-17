@@ -1,12 +1,12 @@
 function SignUpForm(){
     return(
         <>
-            <form action="">
-                <label htmlFor="emailSignUp">Ingresa tu correo electrónico</label>
-                <input id="emailSignUp" type="email" />
+            <form >
+                <label htmlFor="emailSignUp" >Ingresa tu correo electrónico</label>
+                <input id="emailSignUp" type="email" name="email" autoComplete="email" required />
                 <label htmlFor="passwordSignUp">Ingresa tu contraseña</label>
-                <input id="passwordSignUp" type="password" />
-                <button>
+                <input id="passwordSignUp" type="password" name="password" autoComplete="new-password" required />
+                <button type="submit">
                     Confirmar Correo
                 </button>
             </form>
