@@ -1,0 +1,94 @@
+.form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+}
+.title{
+   margin: 0 0 0.25rem; 
+   color: #171b27;
+   font-size: 1.65rem;
+    font-weight: 800;
+}
+
+.description{
+    margin: 0 0 1rem;
+    color: #697185;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.label{
+    margin-top: 0.5rem;
+    color: #252a38;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.input{
+    width: 100%;
+    min-height: 48px;
+    box-sizing: border-box;
+    padding: 0.75rem 0.9rem;
+    border: 1px solid #cbd1de;
+    border-radius: 0.65rem;
+    background: #fff;
+    color: #171b27;
+    font: inherit;
+    transition: 
+        border-color 160ms ease,
+        box-shadow 160ms ease;
+}
+
+.input::placeholder{
+    color: #939bad;
+}
+
+.input:focus-visible{
+    outline: none;
+    border-color: #f47732;
+    box-shadow: 0 0 0 3px rgb(244 119 50 / 18%);
+}
+
+.submitButton{
+    min-height: 48px;
+    margin-top: 1rem;
+    padding: 0.8rem 1rem;
+    border: none;
+    border-radius: 0.64rem;
+    background: #f47732;
+    color: #fff;
+    font: inherit;
+    font-weight: 800;
+    cursor: pointer;
+    transition:
+        background-color 160ms ease,
+        transform 160ms ease;
+}
+
+.submitButton:hover{
+    background: #df6222;
+}
+
+.submitButton:active{
+    transform: scale(0.99);
+}
+
+.submitButton:focus-visible, .link:focus-visible{
+    outline: 3px solid #f47732;
+    outline-offset: 3px;
+}
+
+.link{
+    align-self: flex-end;
+    margin-top: 0.5rem;
+    color: #d95e20;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.link:hover{
+    color: #a84313;
+}
