@@ -7,7 +7,7 @@ function SignUpForm(){
     return(
         
         <>
-            <form className={styles.form}>
+            <form onSubmit={handleSubmit} className={styles.form}>
                 <h2 className={styles.title}>Crea tu cuenta</h2>
                 <p className={styles.description}>Empieza a organizar tus tareas y mejorar tu enfoque.</p>
                 <label className={styles.label} htmlFor="emailSignUp" >Ingresa tu correo electrónico</label>
