@@ -10,7 +10,7 @@ function Auth(){
     return(
         <div className={styles.auth}>
             <header className={styles.nav}>
-                <p>Bienvenido a <br /><span> AtentionHacks </span> </p>
+                <p>Bienvenido a <br /><span>Atention</span><span className={styles.spam}>Hacks </span> </p>
             </header>
             <main className={styles.main}>
                     <section className={styles.authSection}>
@@ -20,7 +20,7 @@ function Auth(){
                         </div>
                         <div className={styles.userInfoSection}>
                             <div className={styles.mainLeft}>
-                                <p>{action === "signIn" ? "Ingresa a tu cuenta" : "Registrate, ¡es muy fácil! :D"}</p>
+                                <p>{action === "signIn" ? "Ingresa a tu cuenta😀" : "Registrate, ¡es muy fácil! 😁"}</p>
                             </div>
                             <div className={styles.mainRight}>
                                 {action === "signIn" ? <SignIn /> : <SignUp />}

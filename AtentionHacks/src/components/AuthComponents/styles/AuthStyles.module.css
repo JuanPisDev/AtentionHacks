@@ -1,10 +1,17 @@
+html{
+        --bg:#111318;
+        background:
+        radial-gradient(ellipse at top right, #48271d 0%, transparent 35%),
+        var(--bg);
+}
+
 .auth{
     --bg:#111318;
     --surface: #1b1e26;
     --accent: #ff792f;
     --accent-hover: #ff9255;
     --text: #f7f7fa;
-    --muted: #aeb4c2;
+    --muted: #ffffff;
 
     display: flex;
     min-height: 100vh;
@@ -14,9 +21,7 @@
     gap: 2rem;
     padding: 2rem 1.25rem;
     color: var(--text);
-    background:
-        radial-gradient(ellipse at top right, #48271d 0%, transparent 35%),
-        var(--bg);
+
     font-family: Inter, system-ui, sans-serif;
 }
 
@@ -24,10 +29,11 @@
     width: 100%;
     max-width: 1100px;
     box-sizing: border-box;
-    border: 1px solid rgb(255 121 47 / 45%);
+    /* border: 1px solid rgb(255 21 47 / 45%); */
     border-radius: 1rem;
     box-shadow: 0 12px 32px rgb(0 0 0 / 20%);
-    background: rgb(255 30 38 / 90%);
+    background: #20242c;
+    border: 1px solid #343945;
     text-align: center;
     
 }
@@ -42,17 +48,23 @@
     font-size: 1.1rem;
     font-weight: 600;
     color: var(--muted);
+    text-shadow: 0px 0px 3px black;
 
 }
 
 .nav p span{
     display: inline-block;
     margin-top: 0.25rem;
-    color: -var(--accent);
     font-size: clamp(1.8rem, 4vw, 2.5rem);
     font-weight: 800;
     letter-spacing: -0.04em;
+    text-shadow: 2px 2px 2px black;
 }
+
+.nav p .spam{
+    color: #fcbf27;
+}
+
     
 .main{
     width: 100%;
