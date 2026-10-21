@@ -6,7 +6,7 @@ function Home() {
   return (
     <div className={styles.home}>
       <div className={styles.menu}>
-        <h1 className={styles.title}>Atention Hacks</h1>
+        <h1 className={styles.title}>AttentionHacks</h1>
         <div className={styles.serviceSection}>
         <ServiceButton className={styles.serviceButton} serviceLink="/Pomodoro" serviceName="Pomodoro" />
         <ServiceButton className={styles.serviceButton} serviceLink="/Alarms" serviceName="Alarms"/>

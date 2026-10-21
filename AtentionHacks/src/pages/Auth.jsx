@@ -10,7 +10,7 @@ function Auth(){
     return(
         <div className={styles.auth}>
             <header className={styles.nav}>
-                <p>Bienvenido a <br /><span>Atention</span><span className={styles.spam}>Hacks </span> </p>
+                <p>Bienvenido a <br /><span>Attention</span><span className={styles.spam}>Hacks </span> </p>
             </header>
             <main className={styles.main}>
                     <section className={styles.authSection}>
