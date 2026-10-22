@@ -92,3 +92,13 @@
 .link:hover{
     color: #a84313;
 }
+
+.error{
+    color: #ff8f8f;
+    font-size: 0.9rem;
+}
+
+.success{
+    color: #8ed6a8;
+    font-size: 0.9rem;
+}
