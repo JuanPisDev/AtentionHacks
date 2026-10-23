@@ -1,9 +1,59 @@
+import {useState} from 'react';
 import styles from "../AuthComponents/styles/AuthFormStyles.module.css"
 
 function SignInForm(){
 
-    function handleSubmit(event){
+    const [error, setError] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
+    const [message, setMessage] = useState("");
+
+    async function handleSubmit(event){
         event.preventDefault();
+
+        setError("");
+        setMessage("");
+        setIsLoading(true);
+
+        const form = event.currentTarget;
+        const formData = new FormData(form);
+
+        const credentials = {
+            email: formData.get("email"),
+            password: formData.get("password"),
+        };
+
+        try{
+            const response = await fetch(
+                "http://127.0.0.1:8000/api/auth/login/",
+                {
+                    method:"POST",
+                    headers:{
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(credentials),
+                }
+            );
+            const data = await response.json();
+
+            if(!response.ok){
+                throw new Error(
+                    "Correo o contraseña incorrectos."
+                );
+            }
+            sessionStorage.setItem("accesToken", data.access);
+            sessionStorage.setItem("refreshToken", data.refresh);
+
+            setMessage("¡Inicio de sesión exitoso!");
+            form.reset();
+        } catch(err){
+            setError(
+                err instanceof Error
+                ? err.message
+                : "No se pudo conectar con el servidor."
+            );
+        } finally {
+            setIsLoading(false);
+        }
     }
 
     return(
@@ -19,8 +69,18 @@ function SignInForm(){
                     Contraseña
                 </label>
                 <input className={styles.input} id="passwordSignIn" name="password" type="password" autoComplete="current-password" required/>
-                <button className={styles.submitButton} type="submit">
-                    Ingresar
+                {error && (
+                    <p role="alert" className={styles.error}>
+                        {error}
+                    </p>
+                )}
+                {message && (
+                    <p role="status" className={styles.success}>
+                        {message}
+                    </p>
+                )}
+                <button className={styles.submitButton} type="submit" disabled={isLoading}>
+                    {isLoading ? "Ingresando..." : "Ingresar"}
                 </button>
                 <a className={styles.link} href="/forgot-password">Olvidé mi contraseña</a>
             </form>
