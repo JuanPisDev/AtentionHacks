@@ -1,8 +1,12 @@
 import {useState} from 'react';
+import {useNavigate} from "react-router-dom";
+import {useAuth} from "../../context/AuthContext";
 import styles from "../AuthComponents/styles/AuthFormStyles.module.css"
 
 function SignInForm(){
 
+    const navigate = useNavigate();
+    const {login} = useAuth();
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState("");
@@ -40,11 +44,11 @@ function SignInForm(){
                     "Correo o contraseña incorrectos."
                 );
             }
-            sessionStorage.setItem("accesToken", data.access);
-            sessionStorage.setItem("refreshToken", data.refresh);
-
-            setMessage("¡Inicio de sesión exitoso!");
+            login(data);
             form.reset();
+
+
+            navigate("/", {replace: true});
         } catch(err){
             setError(
                 err instanceof Error
