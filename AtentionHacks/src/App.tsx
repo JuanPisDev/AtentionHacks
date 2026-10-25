@@ -21,7 +21,6 @@ function App() {
         <Route path="/alarms" element={<Alarms />} />
         <Route path="/kanban" element={<Kanban />} />
         <Route path='/meditation' element={<Meditation />}/>
-        <Route path="/auth" element={<Auth/>}/>
       </Route>
     </Routes>
 
