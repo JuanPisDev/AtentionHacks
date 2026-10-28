@@ -26,6 +26,9 @@ load_dotenv(BASE_DIR/ ".env")
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
+
+if not SECRET_KEY:
+    raise RuntimeError("Falta configurar DJANGO_SECRET_KEY en el archivo .env")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
