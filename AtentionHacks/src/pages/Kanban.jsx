@@ -4,37 +4,49 @@ import { useState, useEffect } from 'react';
 import KanbanList from '../components/KanbanComponents/KanbanList';
 import KanbanListModal from '../components/KanbanComponents/KanbanListModal.jsx';
 import styles from "../components/KanbanComponents/KanbanStyles/KanbanStyles.module.css";
+import {
+  getList,
+  createList,
+  updateList,
+  deleteListRequest,
+  createItem,
+  updateItem,
+  deleteItemRequest,
+} from "../services/kanbanApi.js"
 
 function Kanban() {
+    // const [lists, setLists] = useState( () => {
+    
 
-    const [lists, setLists] = useState( () => {
+    //   try {
+    //     const savedLists = localStorage.getItem("myKanban");
 
-      try {
-        const savedLists = localStorage.getItem("myKanban");
-
-        return savedLists
-          ? JSON.parse(savedLists) 
-          : [
-            {
-              id: crypto.randomUUID(),
-              listTitle: "To Do",
-              items: []
-            },
-            {
-              id: crypto.randomUUID(),
-              listTitle: "Doing",
-              items: []
-            },
-            {
-              id: crypto.randomUUID(),
-              listTitle: "Done",
-              items: []
-            }
-          ];
-      } catch {
-        return [];
-      }
-    });
+    //     return savedLists
+    //       ? JSON.parse(savedLists) 
+    //       : [
+    //         {
+    //           id: crypto.randomUUID(),
+    //           listTitle: "To Do",
+    //           items: []
+    //         },
+    //         {
+    //           id: crypto.randomUUID(),
+    //           listTitle: "Doing",
+    //           items: []
+    //         },
+    //         {
+    //           id: crypto.randomUUID(),
+    //           listTitle: "Done",
+    //           items: []
+    //         }
+    //       ];
+    //   } catch {
+    //     return [];
+    //   }
+    // });
+    const [lists, setLists] = useState([]);
+    const[loading, serLoading] = useState(true);
+    const [error, setError] = useState("");
     const [newList, setNewList] =useState("");
     const [selectedList, setSelectedList] = useState("");
     const [listItem, setListItem] = useState("");
