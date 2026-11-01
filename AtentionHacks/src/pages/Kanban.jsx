@@ -5,7 +5,7 @@ import KanbanList from '../components/KanbanComponents/KanbanList';
 import KanbanListModal from '../components/KanbanComponents/KanbanListModal.jsx';
 import styles from "../components/KanbanComponents/KanbanStyles/KanbanStyles.module.css";
 import {
-  getList,
+  getLists,
   createList,
   updateList,
   deleteListRequest,
@@ -45,7 +45,7 @@ function Kanban() {
     //   }
     // });
     const [lists, setLists] = useState([]);
-    const[loading, serLoading] = useState(true);
+    const[loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const [newList, setNewList] =useState("");
     const [selectedList, setSelectedList] = useState("");
@@ -56,9 +56,33 @@ function Kanban() {
     const [modalMode, setModalMode] = useState(null);
     const [targetList, setTargetList] = useState("");
 
+  useEffect(() => {
+    async function loadKanban(){
+      try {
+        setLoading(true);
+        setError("");
+
+        await refreshLists();
+      } catch (err){
+        console.error("Error al cargar Kanban:", err);
+        setError(
+          "No se pudieron cargar las listas. Comprueba tu sesión y la conexión con el servidor."
+        );
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadKanban();
+  }, []);
+
     useEffect(()=> {
       localStorage.setItem("myKanban", JSON.stringify(lists));
     }, [lists]);
+
+    async function refreshLists(){
+      const data = await getLists();
+      setLists(data);
+    }
 
     function addNewList(list){
 
@@ -262,6 +286,8 @@ function openEditList(listId){
       </div>
         <div className={styles.kanbanContainer}>
           <div className={styles.kanbanBoard}>
+          {loading && <p>Cargando tablero...</p>}
+          {error && <p role='alert'>{error}</p>}
           {lists.map((list) => (
               <KanbanList
                 key={list.id}
