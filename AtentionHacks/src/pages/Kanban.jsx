@@ -62,7 +62,13 @@ function Kanban() {
         setLoading(true);
         setError("");
 
-        await refreshLists();
+        const serverLists = await getLists();
+
+        if(serverLists.length === 0){
+          await migrateLocalLists();
+        } else {
+          setLists(serverLists);
+        }
       } catch (err){
         console.error("Error al cargar Kanban:", err);
         setError(
@@ -82,6 +88,54 @@ function Kanban() {
     async function refreshLists(){
       const data = await getLists();
       setLists(data);
+    }
+
+    async function migrateLocalLists(){
+      const savedData = localStorage.getItem("myKanban");
+
+      let oldLists = [];
+
+      try {
+        oldLists = savedData ? JSON.parse(savedData) : [];
+      } catch {
+        console.warn("Los datos antiguos de Kanban no son JSON válido. ");
+      }
+      if(!Array.isArray(oldLists)){
+        oldLists = [];
+      }
+      if(oldLists.length === 0){
+        oldLists = [
+          { listTitle: "To Do", items: []},
+          { listTitle: "Doing", items: []},
+          { listTitle:"Done", items: []},
+        ];
+      }
+      for (const oldList of oldLists){
+        if (
+            typeof oldList.listTitle !== "string" ||
+            !oldList.listTitle.trim()
+        ){
+          continue;
+        }
+        const newList = await createList(oldList.listTitle.trim());
+        const oldItems = Array.isArray(oldList.items)
+          ? oldList.items
+          : [];
+
+          for (const oldItem of oldItems){
+            if(
+              typeof oldItem.text !== "string" ||
+              !oldItem.text.trim()
+            ){
+              continue;
+            }
+            await createItem(
+              newList.id,
+              oldItem.text.trim()
+            );
+          }
+      }
+      await refreshLists();s
     }
 
     function addNewList(list){
