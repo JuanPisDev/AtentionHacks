@@ -1,6 +1,6 @@
 import HomeButton from '../components/HomeComponents/HomeButton';
 import NewElementButton from '../components/SharedComponents/NewElementButton.jsx';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import KanbanList from '../components/KanbanComponents/KanbanList';
 import KanbanListModal from '../components/KanbanComponents/KanbanListModal.jsx';
 import styles from "../components/KanbanComponents/KanbanStyles/KanbanStyles.module.css";
@@ -16,11 +16,8 @@ import {
 
 function Kanban() {
     // const [lists, setLists] = useState( () => {
-    
-
     //   try {
     //     const savedLists = localStorage.getItem("myKanban");
-
     //     return savedLists
     //       ? JSON.parse(savedLists) 
     //       : [
@@ -44,6 +41,7 @@ function Kanban() {
     //     return [];
     //   }
     // });
+    const hasLoaded = useRef(false);
     const [lists, setLists] = useState([]);
     const[loading, setLoading] = useState(true);
     const [error, setError] = useState("");
@@ -57,6 +55,8 @@ function Kanban() {
     const [targetList, setTargetList] = useState("");
 
   useEffect(() => {
+    if(hasLoaded.current) return;
+    hasLoaded.current = true;
     async function loadKanban(){
       try {
         setLoading(true);
@@ -80,11 +80,7 @@ function Kanban() {
     }
     loadKanban();
   }, []);
-
-    useEffect(()=> {
-      localStorage.setItem("myKanban", JSON.stringify(lists));
-    }, [lists]);
-
+  
     async function refreshLists(){
       const data = await getLists();
       setLists(data);
@@ -135,10 +131,10 @@ function Kanban() {
             );
           }
       }
-      await refreshLists();s
+      await refreshLists();
     }
 
-    function addNewList(list){
+    async function addNewList(list){
 
       const title = list.listTitle.trim();
 
@@ -155,11 +151,16 @@ function Kanban() {
           return;
         } 
           
-        setLists((prevLists) => [...prevLists, list]);
-        console.log(alreadyExist);
+       try{
+          await createList(title);
+          await refreshLists();
+       } catch(err){
+        console.error("Error al crear la lista:", err);
+        alert("No se pudo crear la lista.");
+       }
 
     } 
-    function addNewListItem(selectedList, listItem){
+    async function addNewListItem(selectedList, listItem){
 
       const text = listItem.trim();
 
@@ -168,21 +169,16 @@ function Kanban() {
         return;
       }
 
-      setLists(prevLists =>
-        prevLists.map(list =>
-          selectedList === list.id
-          ? {
-            ...list,
-              items:[...list.items, 
-                {
-                  id:crypto.randomUUID(), 
-                  text:text
-                }]
-          }
-          : list
-        ))}
+      try {
+        await createItem(selectedList, text);
+        await refreshLists();
+      } catch (err){
+        console.error("Error al crear la tarea:", err);
+        alert("No se pudo crear la tarea.");
+      }
+    }
 
-function editList(listId, newTitle){
+  async function editList(listId, newTitle){
 
   
     const title = newTitle.trim();
@@ -192,22 +188,34 @@ function editList(listId, newTitle){
       return;
     }
 
-  setLists(prevLists =>
-    prevLists.map(list => 
-      list.id === listId
-      ? {
-        ...list,
-        listTitle: title
-      }
-      :list
-    )
+  const alreadyExist = lists.some(
+    list =>
+      list.id !== listId &&
+    list.listTitle.toLowerCase() === title.toLowerCase()
   );
+
+  if(alreadyExist){
+    alert("Ya existe una lista con ese nombre.");
+    return;
+  }
+
+  try {
+    await updateList(listId, title);
+    await refreshLists();
+  } catch (err){
+    console.error("Error al editar la lista:", err);
+    alert("No se pudo editar la lista.");
+  }
 }
 
-function deleteList(listId){
-  setLists(prevLists => 
-    prevLists.filter(list => list.id !== listId)
-  );
+async function deleteList(listId){
+  try {
+    await deleteListRequest(listId);
+    await refreshLists();
+  } catch (err) {
+    console.error("Error al eliminar la lista:", err);
+    alert("No se pudo eliminar la lista.");
+  }
 }
 
 function openEditList(listId){
@@ -235,7 +243,7 @@ function openEditList(listId){
     setCreatingList(true);
   }
 
-  function editListItem(listId, itemId, newText){
+  async function editListItem(listId, itemId, newText){
 
     const text = newText.trim();
 
@@ -244,38 +252,23 @@ function openEditList(listId){
       return;
     }
 
-    setLists(prevLists =>
-      prevLists.map(list => 
-        list.id === listId
-        ? {
-          ...list,
-          items: list.items.map(item =>
-            item.id === itemId
-            ? {
-              ...item,
-              text: text
-            }
-            : item
-          )
-        }
-        : list
-      )
-    );
+    try{
+      await updateItem(itemId, {text});
+      await refreshLists();
+    } catch(err){
+      console.error("Error al editar la tare:", err);
+      alert("No se pudo editar la tarea.");
+    }
   }
 
-  function deleteListItem(listId, itemId){
-    setLists(prevLists =>
-      prevLists.map(list =>
-        list.id === listId
-        ? {
-          ...list,
-          items: list.items.filter(
-            item => item.id !== itemId
-          )
-        }
-        :list
-      )
-    )
+  async function deleteListItem(listId, itemId){
+    try{
+      await deleteItemRequest(itemId);
+      await refreshLists();
+    } catch (err){
+      console.error("Error al eliminar la tarea:", err);
+      alert("No se pudo eliminar la tarea.");
+    }
   }
 
   function openMoveItemModal(listId, itemId){
@@ -286,41 +279,23 @@ function openEditList(listId){
     setCreatingList(true);
   }
 
-  function moveListItem(listId, itemId, targetListId){
+  async function moveListItem(listId, itemId, targetListId){
 
-    const currentList = lists.find(list => list.id === listId);
+    if(!targetListId){
+      alert("Selecciona una lista de destino.");
+      return;
+    }
 
-    const item = currentList.items.find(
-      item => item.id === itemId
-    );
+    try{
+      await updateItem(itemId, {
+        kanban_list: targetListId,
+      });
 
-    setLists(prevLists =>
-      prevLists.map(list => {
-        if (list.id === listId)      
-        {
-          return {
-            ...list,
-          items: list.items.filter(
-            item => item.id !== itemId
-          )
-          };
-          }
-        
-
-        if (list.id === targetListId)
-        {
-          return{
-            ...list,
-              items:[...list.items, 
-                {
-                  id:itemId, 
-                  text:item.text
-                }]
-          }
-        }
-        return list;
-      })
-    )
+      await refreshLists();
+    }catch(err){
+      console.error("Error al mover la tarea;", err);
+      alert("No se pudo mover la tarea.");
+    }
   }
 
   return (

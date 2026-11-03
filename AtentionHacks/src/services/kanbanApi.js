@@ -1,12 +1,12 @@
-const API_URL = "http://127.0.0.1/api/kanban";
+const API_URL = "http://127.0.0.1:8000/api/kanban";
 
 async function request(endpoint, options = {}){
-    const accessToken = sessionStorage.getItem("access");
+    const accessToken = sessionStorage.getItem("accessToken");
     const response = await fetch(`${API_URL}${endpoint}`,{
         ...options,
         headers:{
             "Content-type": "application/json",
-            ...API_URL(accessToken
+            ...(accessToken
                 ? {Authorization: `Bearer ${accessToken}`}
                 : {}),
                 ...options.headers,
@@ -44,7 +44,7 @@ export function updateList(listId,listTitle){
 }
 
 export function deleteListRequest(listId){
-    return request(`/lists/${listId}`, {
+    return request(`/lists/${listId}/`, {
         method:"DELETE",
     });
 }
@@ -60,14 +60,14 @@ export function createItem(listId, text){
 }
 
 export function updateItem(itemId, data){
-    return request(`/items/${itemId}`,{
+    return request(`/items/${itemId}/`,{
         method:"PATCH",
         body: JSON.stringify(data),
     })
 }
 
 export function deleteItemRequest(itemId){
-    return request(`/items/${itemId}`,{
+    return request(`/items/${itemId}/`,{
         method:"DELETE",
     });
 }
